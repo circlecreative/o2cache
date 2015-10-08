@@ -1,6 +1,6 @@
 {
 	"name"              : "o2system/o2cache",
-	"description"       : "Database Drivers",
+	"description"       : "O2Cache is an Open Source Cache Management Driver. Wrappers around some of the most popular forms of fast and dynamic caching. All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met. Another amazing product from PT. Lingkar Kreasi (Circle Creative), released under MIT License.",
 	"license"           : "MIT",
 	"minimum-stability" : "dev",
 	"version"           : "1.0.0",
