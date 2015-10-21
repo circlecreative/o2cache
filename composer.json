@@ -1,6 +1,6 @@
 {
 	"name"              : "o2system/o2cache",
-	"description"       : "Database Drivers",
+	"description"       : "Open Source Cache Management Driver Library",
 	"license"           : "MIT",
 	"minimum-stability" : "dev",
 	"version"           : "1.0.0",
