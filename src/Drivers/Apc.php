@@ -39,20 +39,17 @@
 namespace O2System\Cache\Drivers;
 
 // ------------------------------------------------------------------------
-
-use O2System\Glob\Drivers;
-use O2System\Cache\Exception;
+use O2System\Cache\Interfaces\Driver;
 
 /**
  * APC Caching Class
  *
  * @package        o2cache
  * @subpackage     Drivers
- * @category       Driver
  * @author         Circle Creative Developer Team
  * @link
  */
-class Apc extends Drivers
+class Apc extends Driver
 {
     /**
      * Driver Name
@@ -237,7 +234,7 @@ class Apc extends Drivers
     {
         if( ! extension_loaded( 'apc' ) OR ! ini_get( 'apc.enabled' ) )
         {
-            throw new Exception( 'The APC PHP extension must be loaded to use APC Cache.', 103 );
+            throw new \BadFunctionCallException( 'The APC PHP extension must be loaded to use APC Cache.' );
         }
 
         return TRUE;

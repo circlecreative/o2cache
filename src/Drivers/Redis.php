@@ -41,14 +41,12 @@ namespace O2System\Cache\Drivers;
 // ------------------------------------------------------------------------
 
 use O2System\Cache\Interfaces\Driver;
-use O2System\Cache\Exception;
 
 /**
  * Redis Caching Class
  *
  * @package        o2cache
  * @subpackage     Drivers
- * @category       Driver
  * @author         Anton Lindqvist <anton@qvister.se>
  * @link
  */
@@ -360,7 +358,7 @@ class Redis extends Driver
     {
         if( ! extension_loaded( 'redis' ) )
         {
-            throw new Exception( 'The Redis extension must be loaded to use Redis cache.', 103 );
+            throw new \BadFunctionCallException( 'The Redis extension must be loaded to use Redis cache.', 103 );
         }
 
         return TRUE;

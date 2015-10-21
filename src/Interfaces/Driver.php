@@ -1,7 +1,52 @@
 <?php
+/**
+ * O2Cache
+ *
+ * An open source PHP Cache Management for PHP 5.4 or newer
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2015, PT. Lingkar Kreasi (Circle Creative).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package        O2System
+ * @author         Steeven Andrian Salim
+ * @copyright      Copyright (c) 2005 - 2014, PT. Lingkar Kreasi (Circle Creative).
+ * @license        http://circle-creative.com/products/o2cache/license.html
+ * @license        http://opensource.org/licenses/MIT   MIT License
+ * @link           http://circle-creative.com/products/o2cache.html
+ * @filesource
+ */
+// ------------------------------------------------------------------------
 
 namespace O2System\Cache\Interfaces;
 
+// ------------------------------------------------------------------------
+
+/**
+ * Driver Interface Class
+ *
+ * @package         o2cache
+ * @subpackage      Interfaces
+ * @author          Circle Creative Developer Team
+ */
 abstract class Driver
 {
     /**
@@ -10,7 +55,7 @@ abstract class Driver
      * @access    public
      * @var       string
      */
-	public $driver;
+    public $driver;
 
     /**
      * Driver Resource Handler
@@ -18,7 +63,7 @@ abstract class Driver
      * @access    public
      * @var       object
      */
-	protected $_handle;
+    protected $_handle;
 
     /**
      * Driver Class Constructor
@@ -27,13 +72,13 @@ abstract class Driver
      *
      * @access   public
      */
-	public function __construct($config = array())
-	{
-		foreach($config as $key => $value)
-		{
-			$this->{$key} = $value;
-		}
-	}
+    public function __construct( $config = array() )
+    {
+        foreach( $config as $key => $value )
+        {
+            $this->{$key} = $value;
+        }
+    }
 
     // ------------------------------------------------------------------------
 
@@ -59,7 +104,7 @@ abstract class Driver
      * @return    mixed    value matching $id or FALSE on failure
      */
     abstract public function get( $id );
-    
+
     // ------------------------------------------------------------------------
 
     /**

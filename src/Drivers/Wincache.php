@@ -40,19 +40,17 @@ namespace O2System\Cache\Drivers;
 
 // ------------------------------------------------------------------------
 
-use O2System\Glob\Drivers;
-use O2System\Cache\Exception;
+use O2System\Cache\Interfaces\Driver;
 
 /**
  * Wincache Caching Class
  *
  * @package        o2cache
  * @subpackage     Drivers
- * @category       Driver
  * @author         Mike Murkovic
  * @link
  */
-class Wincache extends Drivers
+class Wincache extends Driver
 {
     /**
      * Driver Name
@@ -229,7 +227,7 @@ class Wincache extends Drivers
     {
         if( ! extension_loaded( 'wincache' ) OR ! ini_get( 'wincache.ucenabled' ) )
         {
-            throw new Exception('The Wincache PHP extension must be loaded to use Wincache Cache.', 103);
+            throw new \BadFunctionCallException('The Wincache PHP extension must be loaded to use Wincache Cache.', 103);
         }
 
         return TRUE;

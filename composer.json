@@ -1,6 +1,6 @@
 {
 	"name"              : "o2system/o2cache",
-	"description"       : "O2Cache is an Open Source Cache Management Driver. Wrappers around some of the most popular forms of fast and dynamic caching. All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met. Another amazing product from PT. Lingkar Kreasi (Circle Creative), released under MIT License.",
+	"description"       : "Database Drivers",
 	"license"           : "MIT",
 	"minimum-stability" : "dev",
 	"version"           : "1.0.0",
@@ -27,19 +27,17 @@
 	],
 	"support"           : {
 		"email"  : "developer@circle-creative.com",
-		"issues" : "https://github.com/circlecreative/o2system/issues",
+		"issues" : "https://github.com/circlecreative/o2cache/issues",
 		"forum"  : "https://www.facebook.com/groups/498147006994512"
 	},
 	"links"             : {
-		"info"        : "http://www.circle-creative.com/products/o2gears.html",
-		"wiki"        : "http://o2system.center/standalone/o2gears/user-guide/getting-started.html",
-		"github-wiki" : "http://github.com/circlecreative/o2gears/wiki"
+		"info"        : "http://o2system.in/features/standalone/o2cache",
+		"wiki"        : "http://o2system.in/features/standalone/o2cache/wiki",
+		"github-wiki" : "http://github.com/circlecreative/o2cache/wiki"
 	},
-	"minimum-stability" : "dev",
 	"require"           : {
 		"php"              : ">=5.4.0",
-		"o2system/o2glob"  : "*",
-		"o2system/o2gears" : "*"
+		"o2system/o2glob"  : "dev-master"
 	},
 	"autoload"          : {
 		"psr-4" : {

@@ -40,19 +40,17 @@ namespace O2System\Cache\Drivers;
 
 // ------------------------------------------------------------------------
 
-use O2System\Glob\Drivers;
-use O2System\Cache\Exception;
+use O2System\Cache\Interfaces\Driver;
 
 /**
  * File Caching Class
  *
  * @package        o2cache
  * @subpackage     Drivers
- * @category       Driver
  * @author         Circle Creative Developer Team
  * @link
  */
-class Files extends Drivers
+class Files extends Driver
 {
     /**
      * Driver Name
@@ -83,7 +81,7 @@ class Files extends Drivers
     {
         if($this->is_supported() === FALSE)
         {
-            throw new Exception('The File cache path is not writeable.', 103);
+            throw new \BadFunctionCallException('The File cache path is not writeable.', 103);
         }
 
         return TRUE;
