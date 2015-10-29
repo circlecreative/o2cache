@@ -1,7 +1,14 @@
 O2Cache
 =====
+
+[![Latest Stable Version](https://poser.pugx.org/o2system/o2cache/v/stable)](https://packagist.org/packages/o2system/o2cache) [![Total Downloads](https://poser.pugx.org/o2system/o2cache/downloads)](https://packagist.org/packages/o2system/o2cache) [![Latest Unstable Version](https://poser.pugx.org/o2system/o2cache/v/unstable)](https://packagist.org/packages/o2system/o2cache) [![License](https://poser.pugx.org/o2system/o2cache/license)](https://packagist.org/packages/o2system/o2cache)
+<a href="https://twitter.com/intent/tweet?text=Open+Source+Cache+Management+Driver+Library.+Wrappers+around+some+of+the+most+popular+cache+storage+engine.+&url=https%3A%2F%2Fgithub.com%2Fcirclecreative%2Fo2cache&hashtags=cache%2C+phplibraries%2C+phpclass%2C+o2system%2C+circlecreative&original_referer=http%3A%2F%2Fgithub.com%2F&tw_p=tweetbutton" target="_blank">
+  <img src="http://jpillora.com/github-twitter-button/img/tweet.png"
+       alt="tweet button" title="Open Source Cache Management Driver Library. Wrappers around some of the most popular cache storage engine. "></img>
+</a>
+
 [O2Cache][3] is an Open Source Cache Management Driver Library. 
-Wrappers around some of the most popular forms of fast and dynamic caching. 
+Wrappers around some of the most popular cache storage engine. 
 All but file-based caching require specific server requirements, and a Fatal Exception will be thrown if server requirements are not met. 
 Another amazing product from [PT. Lingkar Kreasi (Circle Creative)][1], released under MIT License.
 
