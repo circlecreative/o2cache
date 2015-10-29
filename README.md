@@ -13,7 +13,7 @@ Another amazing product from [PT. Lingkar Kreasi (Circle Creative)][1], released
 
 Installation
 ------------
-The best way to install O2Cache is to use [Composer][9]
+The best way to install [O2Cache](https://packagist.org/packages/o2system/o2cache) is to use [Composer][9]
 ```
 composer require o2system/o2cache:'dev-master'
 ```
@@ -21,11 +21,13 @@ composer require o2system/o2cache:'dev-master'
 Usage
 -----
 ```php
+use O2System\Cache;
+
 // Without Fallback Driver
-$cache = new \O2System\Cache(['driver' => 'redis']);
+$cache = new Cache(['driver' => 'redis']);
 
 // With Fallback Driver
-$cache = new \O2System\Cache(array(
+$cache = new Cache(array(
     'storage' => ['driver' => 'redis'],
     'fallback' => ['driver' => 'files']
 ));
@@ -51,7 +53,7 @@ if( ! $forever = $cache->get('forever') )
 }
 ```
 
-More details at the Wiki. (Coming Soon)
+More details at the [Wiki](http://github.com/circlecreative/o2cache/wiki).
 
 Ideas and Suggestions
 ---------------------
