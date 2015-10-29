@@ -79,9 +79,12 @@ class Cache
     public function __construct( array $config = array() )
     {
         // Glob Exception
-        $exception = new Exception();
-        $exception->register_path( __DIR__ . '/Views/' );
-        $exception->register_handler();
+        if(! class_exists('O2System', FALSE))
+        {
+            $exception = new Exception();
+            $exception->register_path( __DIR__ . '/Views/' );
+            $exception->register_handler();
+        }
 
         if( ! empty( $config ) )
         {
