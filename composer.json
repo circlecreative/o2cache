@@ -2,9 +2,9 @@
 	"name"              : "o2system/o2cache",
 	"description"       : "Open Source Cache Management Driver Library",
 	"license"           : "MIT",
-	"version"           : "1.0.0-beta",
+	"version"           : "1.0.0",
 	"type"              : "php-libraries",
-	"keywords"          : [ "utilities", "php", "framework", "driver", "libraries", "database" ],
+	"keywords"          : [ "utilities", "cache", "redis", "memcached", "php", "framework", "driver", "libraries", "database" ],
 	"authors"           : [
 		{
 			"name"     : "PT. Lingkar Kreasi (Circle Creative)",
@@ -19,6 +19,11 @@
 			"role"     : "Founder and Lead Project"
 		},
 		{
+			"name"  : "Teguh Rianto",
+			"email" : "teguh22.rianto@gmail.com",
+			"role"  : "Github Page Designer and Writer"
+		},
+		{
 			"name"  : "Aradea",
 			"email" : "aradea.hind@gmail.com",
 			"role"  : "Wiki Writer"
@@ -30,9 +35,8 @@
 		"forum"  : "https://www.facebook.com/groups/498147006994512"
 	},
 	"links"             : {
-		"info"        : "http://o2system.in/features/standalone/o2cache",
-		"wiki"        : "http://o2system.in/features/standalone/o2cache/wiki",
-		"github-wiki" : "http://github.com/circlecreative/o2cache/wiki"
+		"info"        : "http://o2system.in/features/o2cache",
+		"wiki" : "http://github.com/circlecreative/o2cache/wiki"
 	},
 	"require"           : {
 		"php"              : ">=5.4.0",
