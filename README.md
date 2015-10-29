@@ -2,8 +2,6 @@ O2Cache
 =====
 
 [![Latest Stable Version](https://poser.pugx.org/o2system/o2cache/v/stable)](https://packagist.org/packages/o2system/o2cache) [![Total Downloads](https://poser.pugx.org/o2system/o2cache/downloads)](https://packagist.org/packages/o2system/o2cache) [![Latest Unstable Version](https://poser.pugx.org/o2system/o2cache/v/unstable)](https://packagist.org/packages/o2system/o2cache) [![License](https://poser.pugx.org/o2system/o2cache/license)](https://packagist.org/packages/o2system/o2cache)
-[![Build Status](https://img.shields.io/github/forks/circlecreative/o2cache.svg)](https://github.com/circlecreative/o2cache)
-[![Build Status](https://img.shields.io/github/stars/circlecreative/o2cache.svg)](https://github.com/circlecreative/o2cache)
 
 [O2Cache][3] is an Open Source Cache Management Driver Library. 
 Wrappers around some of the most popular cache storage engine. 
@@ -80,6 +78,9 @@ System Requirements
 Credits
 -------
 * Founder and Lead Projects: [Steeven Andrian Salim (steevenz.com)][7]
+* Github Pages Designer and Writer: [Teguh Rianto](http://teguhrianto.tk)
+* Wiki Writer: [Steeven Andrian Salim](http://steevenz.com) (EN), Aradea Hind (ID)
+* Special Thanks To: Yudi Primaputra (CTO - PT. YukBisnis Indonesia)
 
 <a href="https://twitter.com/intent/tweet?text=Open+Source+Cache+Management+Driver+Library.+Wrappers+around+some+of+the+most+popular+cache+storage+engine.+&url=https%3A%2F%2Fgithub.com%2Fcirclecreative%2Fo2cache&hashtags=cache%2C+phplibraries%2C+phpclass%2C+o2system%2C+circlecreative&original_referer=http%3A%2F%2Fgithub.com%2F&tw_p=tweetbutton" target="_blank">
   <img src="http://jpillora.com/github-twitter-button/img/tweet.png"
