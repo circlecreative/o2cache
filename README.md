@@ -86,3 +86,7 @@ Credits
 [8]: mailto:developer@o2system.in
 [9]: https://getcomposer.org
 [10]: http://codeigniter.com
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/circlecreative/o2cache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
