@@ -69,10 +69,10 @@ Please kindly submit your [issues at Github][5] so we can track all the issues a
 System Requirements
 -------------------
 - PHP 5.4+
-- PHP Extension Memcached (Optional)
-- PHP Extension Redis (Optional)
-- PHP Extension Wincache (Optional)
-- PHP Extension APC (Optional)
+- PHP Extension [Memcached (Optional)](http://php.net/memcached)
+- PHP Extension [Redis (Optional)](http://redis.io/)
+- PHP Extension [Wincache (Optional)](http://php.net/wincache)
+- PHP Extension [APC (Optional)](http://php.net/apc)
 - [Composer][9]
 
 Credits
