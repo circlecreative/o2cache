@@ -47,7 +47,7 @@ use O2System\Cache\Interfaces\Driver;
  *
  * @package        o2cache
  * @subpackage     Drivers
- * @author         Circle Creative Developer Team
+ * @author         O2System Developer Team
  * @link
  */
 class Memcached extends Driver
@@ -240,7 +240,7 @@ class Memcached extends Driver
      *
      * @return    bool    false on failure/true on success
      */
-    public function clean()
+    public function destroy()
     {
         return $this->_handle->flush();
     }
@@ -266,7 +266,7 @@ class Memcached extends Driver
      *
      * @return    mixed    FALSE on failure, array on success.
      */
-    public function get_metadata( $id )
+    public function metadata( $id )
     {
         $stored = $this->_handle->get( $id );
 

@@ -168,7 +168,7 @@ class Wincache extends Driver
      *
      * @return    bool    false on failure/true on success
      */
-    public function clean()
+    public function destroy()
     {
         return wincache_ucache_clear();
     }
@@ -180,7 +180,7 @@ class Wincache extends Driver
      *
      * @return    mixed    array on success, false on failure
      */
-    public function info()
+    public function info( $type = NULL )
     {
         return wincache_ucache_info( TRUE );
     }
@@ -194,7 +194,7 @@ class Wincache extends Driver
      *
      * @return    mixed    array on success/false on failure
      */
-    public function get_metadata( $id )
+    public function metadata( $id )
     {
         if( $stored = wincache_ucache_info( FALSE, $id ) )
         {

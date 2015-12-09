@@ -47,7 +47,7 @@ use O2System\Cache\Interfaces\Driver;
  *
  * @package        o2cache
  * @subpackage     Drivers
- * @author         Circle Creative Developer Team
+ * @author         O2System Developer Team
  * @link
  */
 class Files extends Driver
@@ -236,7 +236,7 @@ class Files extends Driver
      *
      * @return    bool    false on failure/true on success
      */
-    public function clean()
+    public function destroy()
     {
         return $this->_clean_files( $this->path, FALSE, TRUE );
     }
@@ -359,7 +359,7 @@ class Files extends Driver
      *
      * @return    mixed    FALSE on failure, array on success.
      */
-    public function get_metadata( $id )
+    public function metadata( $id )
     {
         if( ! file_exists( $this->path . $id ) )
         {

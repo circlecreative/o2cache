@@ -45,7 +45,7 @@ namespace O2System\Cache\Interfaces;
  *
  * @package         o2cache
  * @subpackage      Interfaces
- * @author          Circle Creative Developer Team
+ * @author          O2System Developer Team
  */
 abstract class Driver
 {
@@ -157,11 +157,11 @@ abstract class Driver
     // ------------------------------------------------------------------------
 
     /**
-     * Clean the cache
+     * Destroy the cache
      *
      * @return    bool    TRUE on success, FALSE on failure
      */
-    abstract public function clean();
+    abstract public function destroy();
 
     // ------------------------------------------------------------------------
 
@@ -183,7 +183,7 @@ abstract class Driver
      *
      * @return    mixed    cache item metadata
      */
-    abstract public function get_metadata( $id );
+    abstract public function metadata( $id );
 
     // ------------------------------------------------------------------------
 

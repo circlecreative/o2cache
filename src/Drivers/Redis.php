@@ -40,6 +40,7 @@ namespace O2System\Cache\Drivers;
 
 // ------------------------------------------------------------------------
 
+use O2System\Cache\Exception;
 use O2System\Cache\Interfaces\Driver;
 
 /**
@@ -128,24 +129,37 @@ class Redis extends Driver
     {
         if( $this->is_supported() )
         {
-            $this->_handle = new \Redis();
+            $handle = new \Redis();
 
             try
             {
                 if( $this->socket_type === 'unix' )
                 {
-                    $success = $this->_handle->connect( $this->socket );
+                    $success = $handle->connect( $this->socket );
                 }
                 else // tcp socket
                 {
-                    $success = $this->_handle->connect( $this->host, $this->port, $this->timeout );
+                    $success = $handle->connect( $this->host, $this->port, $this->timeout );
                 }
 
-                if( ! $success )
+                if( $success )
                 {
-                    throw new Exception( 'Redis connection refused. Check the config.' );
-
-                    return FALSE;
+                    $this->_handle = $handle;
+					
+					if( isset( $this->password ) )
+					{
+						$this->_handle->auth( $this->password );
+					}
+		
+					// Initialize the index of serialized values.
+					$serialized = $this->_handle->sMembers( '_o2cache_serialized_indexes' );
+		
+					if( ! empty( $serialized ) )
+					{
+						$this->_serialized = array_flip( $serialized );
+					}
+		
+					return TRUE;
                 }
             }
             catch( \RedisException $e )
@@ -154,21 +168,6 @@ class Redis extends Driver
 
                 return FALSE;
             }
-
-            if( isset( $this->password ) )
-            {
-                $this->_handle->auth( $this->password );
-            }
-
-            // Initialize the index of serialized values.
-            $serialized = $this->_handle->sMembers( '_o2cache_serialized_indexes' );
-
-            if( ! empty( $serialized ) )
-            {
-                $this->_serialized = array_flip( $serialized );
-            }
-
-            return TRUE;
         }
 
         return FALSE;
@@ -300,7 +299,7 @@ class Redis extends Driver
      * @return    bool
      * @see        Redis::flushDB()
      */
-    public function clean()
+    public function destroy()
     {
         return $this->_handle->flushDB();
     }
@@ -331,7 +330,7 @@ class Redis extends Driver
      *
      * @return    array
      */
-    public function get_metadata( $key )
+    public function metadata( $key )
     {
         $value = $this->get( $key );
 
@@ -358,7 +357,7 @@ class Redis extends Driver
     {
         if( ! extension_loaded( 'redis' ) )
         {
-            throw new \BadFunctionCallException( 'The Redis extension must be loaded to use Redis cache.', 103 );
+            throw new Exception( 'The Redis extension must be loaded to use Redis cache.', 103 );
         }
 
         return TRUE;
@@ -375,7 +374,7 @@ class Redis extends Driver
      */
     public function __destruct()
     {
-        if( $this->_handle )
+        if( $this->_handle instanceof \Redis )
         {
             $this->_handle->close();
         }

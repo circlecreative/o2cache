@@ -36,109 +36,117 @@
  */
 // ------------------------------------------------------------------------
 
-namespace O2System;
-
-// ------------------------------------------------------------------------
-
-use O2System\Glob\Exception;
-
-/**
- * Caching Class
- *
- * @package        o2cache
- * @category       Bootstrap
- * @author         Circle Creative Developer Team
- * @link
- */
-class Cache
+namespace O2System
 {
-    /**
-     * Valid Drivers List
-     *
-     * @access  protected
-     * @type    array
-     */
-    protected $_valid_drivers = array(
-        'files',
-        'apc',
-        'memcached',
-        'redis',
-        'wincache'
-    );
+	/**
+	 * Caching Class
+	 *
+	 * @package        o2cache
+	 * @category       Bootstrap
+	 * @author         O2System Developer Team
+	 * @link
+	 */
+	class Cache
+	{
+		/**
+		 * Valid Drivers List
+		 *
+		 * @access  protected
+		 * @type    array
+		 */
+		protected $_valid_drivers = array(
+			'files',
+			'apc',
+			'memcached',
+			'redis',
+			'wincache'
+		);
+	
+		/**
+		 * Cache Storage Driver
+		 *
+		 * @access  protected
+		 * @type    object
+		 */
+		protected $_storage;
+	
+		// ------------------------------------------------------------------------
+	
+		public function __construct( array $config = array() )
+		{
+			if( ! empty( $config ) )
+			{
+				if( isset( $config[ 'storage' ] ) AND isset( $config[ 'failover' ] ) )
+				{
+					if( $this->setup( $config[ 'storage' ] ) === FALSE )
+					{
+						$this->setup( $config[ 'failover' ] );
+					}
+				}
+				elseif( isset( $config[ 'driver' ] ) )
+				{
+					return $this->setup( $config );
+				}
+			}
+		}
+	
+		/**
+		 * Setup Cache Driver
+		 *
+		 * @param array $config
+		 *
+		 * @return  mixed
+		 * @throws  Exception
+		 */
+		public function setup( array $config = array() )
+		{
+			if( empty( $config[ 'driver' ] ) )
+			{
+				throw new Cache\Exception( 'You have not selected storage cache driver.' );
+			}
+	
+			if( ! in_array( $config[ 'driver' ], $this->_valid_drivers ) )
+			{
+				throw new Cache\Exception( 'Unsupported storage cache driver.' );
+			}
+	
+			if( file_exists( __DIR__ . '/Drivers/' . ucfirst( $config[ 'driver' ] . '.php' ) ) )
+			{
+				// Create DB Connection
+				$class_name = '\O2System\Cache\Drivers\\' . ucfirst( $config[ 'driver' ] );
+				$this->_storage = new $class_name( $config );
+	
+				if( $this->_storage->initialize() )
+				{
+					return $this->_storage;
+				}
+			}
+	
+			return FALSE;
+		}
+	
+		public function __call($method, $args = array())
+		{
+			if(method_exists($this->_storage, $method))
+			{
+				return call_user_func_array(array($this->_storage, $method), $args);
+			}
+		}
+	}
+}
 
-    /**
-     * Cache Storage Driver
-     *
-     * @access  protected
-     * @type    object
-     */
-    protected $_storage;
+namespace O2System\Cache
+{
+	use O2System\Glob\Exception\Interfaces as ExceptionInterface;
 
-    // ------------------------------------------------------------------------
+	class Exception extends ExceptionInterface
+	{
+		public function __construct( $message = NULL, $code = 0 )
+		{
+			parent::__construct( $message, $code );
 
-    public function __construct( array $config = array() )
-    {
-        // Glob Exception
-        $exception = new Exception();
-        $exception->register_path( __DIR__ . '/Views/' );
-        $exception->register_handler();
-
-        if( ! empty( $config ) )
-        {
-            if( isset( $config[ 'storage' ] ) AND isset( $config[ 'fallback' ] ) )
-            {
-                if( $this->setup( $config[ 'storage' ] ) === FALSE )
-                {
-                    $this->setup( $config[ 'fallback' ] );
-                }
-            }
-            elseif( isset( $config[ 'driver' ] ) )
-            {
-                return $this->setup( $config );
-            }
-        }
-    }
-
-    /**
-     * Setup Cache Driver
-     *
-     * @param array $config
-     *
-     * @return  mixed
-     * @throws  Exception
-     */
-    public function setup( array $config = array() )
-    {
-        if( empty( $config[ 'driver' ] ) )
-        {
-            throw new \RuntimeException( 'You have not selected storage cache driver.' );
-        }
-
-        if( ! in_array( $config[ 'driver' ], $this->_valid_drivers ) )
-        {
-            throw new \RuntimeException( 'Unsupported storage cache driver.' );
-        }
-
-        if( file_exists( __DIR__ . '/Drivers/' . ucfirst( $config[ 'driver' ] . '.php' ) ) )
-        {
-            // Create DB Connection
-            $class_name = '\O2System\Cache\Drivers\\' . ucfirst( $config[ 'driver' ] );
-            $this->_storage = new $class_name( $config );
-
-            if( $this->_storage->initialize() )
-            {
-                return $this->_storage;
-            }
-        }
-
-        return FALSE;
-    }
-
-    public function __call($method, $args = array())
-    {
-        if(method_exists($this->_storage, $method))
-        {
-            return call_user_func_array(array($this->_storage, $method), $args);
-        }
-    }
+			// Register Custom Exception View Path
+			$this->register_view_paths( __DIR__ . '/Views/');
+		}
+	}
 }
