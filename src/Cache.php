@@ -135,9 +135,71 @@ namespace O2System
 	}
 }
 
+<<<<<<< HEAD
 namespace O2System\Cache
 {
 	use O2System\Glob\Exception\Interfaces as ExceptionInterface;
+=======
+    // ------------------------------------------------------------------------
+
+    public function __construct( array $config = array() )
+    {
+        // Glob Exception
+        if(! class_exists('O2System', FALSE))
+        {
+            $exception = new Exception();
+            $exception->register_path( __DIR__ . '/Views/' );
+            $exception->register_handler();
+        }
+
+        if( ! empty( $config ) )
+        {
+            if( isset( $config[ 'storage' ] ) AND isset( $config[ 'fallback' ] ) )
+            {
+                if( $this->setup( $config[ 'storage' ] ) === FALSE )
+                {
+                    $this->setup( $config[ 'fallback' ] );
+                }
+            }
+            elseif( isset( $config[ 'driver' ] ) )
+            {
+                return $this->setup( $config );
+            }
+        }
+    }
+
+    /**
+     * Setup Cache Driver
+     *
+     * @param array $config
+     *
+     * @return  mixed
+     * @throws  Exception
+     */
+    public function setup( array $config = array() )
+    {
+        if( empty( $config[ 'driver' ] ) )
+        {
+            throw new \RuntimeException( 'You have not selected storage cache driver.' );
+        }
+
+        if( ! in_array( $config[ 'driver' ], $this->_valid_drivers ) )
+        {
+            throw new \RuntimeException( 'Unsupported storage cache driver.' );
+        }
+
+        if( file_exists( __DIR__ . '/Drivers/' . ucfirst( $config[ 'driver' ] . '.php' ) ) )
+        {
+            // Create DB Connection
+            $class_name = '\O2System\Cache\Drivers\\' . ucfirst( $config[ 'driver' ] );
+            $this->_storage = new $class_name( $config );
+
+            if( $this->_storage->initialize() )
+            {
+                return $this->_storage;
+            }
+        }
+>>>>>>> origin/master
 
 	class Exception extends ExceptionInterface
 	{
