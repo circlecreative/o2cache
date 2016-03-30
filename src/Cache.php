@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2015, PT. Lingkar Kreasi (Circle Creative).
+ * Copyright (c) 2015, .
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
  *
  * @package        O2System
  * @author         Steeven Andrian Salim
- * @copyright      Copyright (c) 2005 - 2014, PT. Lingkar Kreasi (Circle Creative).
+ * @copyright      Copyright (c) 2005 - 2014, .
  * @license        http://circle-creative.com/products/o2cache/license.html
  * @license        http://opensource.org/licenses/MIT   MIT License
  * @link           http://circle-creative.com/products/o2cache.html
@@ -38,6 +38,10 @@
 
 namespace O2System
 {
+	use O2System\Cache\Exception;
+	use O2System\Glob\Interfaces\DriverInterface;
+	use O2System\Glob\Interfaces\LibraryInterface;
+
 	/**
 	 * Caching Class
 	 *
@@ -46,50 +50,27 @@ namespace O2System
 	 * @author         O2System Developer Team
 	 * @link
 	 */
-	class Cache
+	class Cache extends LibraryInterface
 	{
-		/**
-		 * Valid Drivers List
-		 *
-		 * @access  protected
-		 * @type    array
-		 */
-		protected $_valid_drivers = array(
-			'files',
-			'apc',
-			'memcached',
-			'redis',
-			'wincache'
-		);
-	
 		/**
 		 * Cache Storage Driver
 		 *
 		 * @access  protected
 		 * @type    object
 		 */
-		protected $_storage;
-	
+		protected $_driver;
+
 		// ------------------------------------------------------------------------
-	
-		public function __construct( array $config = array() )
+
+		public function __reconstruct( array $config = array() )
 		{
-			if( ! empty( $config ) )
-			{
-				if( isset( $config[ 'storage' ] ) AND isset( $config[ 'failover' ] ) )
-				{
-					if( $this->setup( $config[ 'storage' ] ) === FALSE )
-					{
-						$this->setup( $config[ 'failover' ] );
-					}
-				}
-				elseif( isset( $config[ 'driver' ] ) )
-				{
-					return $this->setup( $config );
-				}
-			}
+			parent::__reconstruct( $config );
+
+			$this->initialize();
 		}
-	
+
+		// ------------------------------------------------------------------------
+
 		/**
 		 * Setup Cache Driver
 		 *
@@ -98,38 +79,60 @@ namespace O2System
 		 * @return  mixed
 		 * @throws  Exception
 		 */
-		public function setup( array $config = array() )
+		public function initialize( $config = array() )
 		{
-			if( empty( $config[ 'driver' ] ) )
+			$config = empty( $config ) ? $this->_config : $config;
+
+			if ( ! empty( $config ) )
 			{
-				throw new Cache\Exception( 'You have not selected storage cache driver.' );
-			}
-	
-			if( ! in_array( $config[ 'driver' ], $this->_valid_drivers ) )
-			{
-				throw new Cache\Exception( 'Unsupported storage cache driver.' );
-			}
-	
-			if( file_exists( __DIR__ . '/Drivers/' . ucfirst( $config[ 'driver' ] . '.php' ) ) )
-			{
-				// Create DB Connection
-				$class_name = '\O2System\Cache\Drivers\\' . ucfirst( $config[ 'driver' ] );
-				$this->_storage = new $class_name( $config );
-	
-				if( $this->_storage->initialize() )
+				if ( isset( $config[ 'storage' ] ) AND isset( $config[ 'failover' ] ) )
 				{
-					return $this->_storage;
+					if ( $driver = $this->initialize( $config[ 'storage' ] ) === FALSE )
+					{
+						$driver = $this->initialize( $config[ 'failover' ] );
+					}
+
+					return $driver;
 				}
+				elseif( isset( $config ['storage' ] ) )
+				{
+					return $this->initialize( $config[ 'storage' ] );
+				}
+				elseif ( isset( $config[ 'driver' ] ) )
+				{
+					if(empty($this->_config))
+					{
+						$this->_config = $config;
+					}
+
+					$driver = $this->_loadDriver( $config[ 'driver' ] );
+					$driver->setConfig( $config );
+
+					if ( $driver === FALSE OR
+						( $driver instanceof DriverInterface AND $driver->is_supported() === FALSE )
+					)
+					{
+						throw new Cache\UnsupportedDriverException( 'CACHE_UNSUPPORTEDDRIVER', 2002, $config );
+					}
+					else
+					{
+						$this->_driver = $config[ 'driver' ];
+
+						return $driver->initialize();
+					}
+				}
+
+				throw new Cache\UndefinedDriverException( 'CACHE_UNDEFINEDDRIVER', 2001 );
 			}
-	
-			return FALSE;
 		}
-	
-		public function __call($method, $args = array())
+
+		// ------------------------------------------------------------------------
+
+		public function __call( $method, $args = array() )
 		{
-			if(method_exists($this->_storage, $method))
+			if ( method_exists( $this->{$this->_driver}, $method ) )
 			{
-				return call_user_func_array(array($this->_storage, $method), $args);
+				return call_user_func_array( array( $this->{$this->_driver}, $method ), $args );
 			}
 		}
 	}
@@ -137,16 +140,46 @@ namespace O2System
 
 namespace O2System\Cache
 {
-	use O2System\Glob\Exception\Interfaces as ExceptionInterface;
+	use O2System\Glob\Interfaces\ExceptionInterface;
 
+	/**
+	 * Class Exception
+	 *
+	 * @package O2System\Cache
+	 */
 	class Exception extends ExceptionInterface
 	{
-		public function __construct( $message = NULL, $code = 0 )
-		{
-			parent::__construct( $message, $code );
+		public $library = array(
+			'name'        => 'O2System Cache (O2Cache)',
+			'description' => 'Open Source Cache Management Driver Library',
+			'version'     => '1.0',
+		);
+	}
 
-			// Register Custom Exception View Path
-			$this->register_view_paths( __DIR__ . '/Views/');
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Class UndefinedDriverException
+	 *
+	 * @package O2System\Cache
+	 */
+	class UndefinedDriverException extends Exception
+	{
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Class UnsupportedDriverException
+	 *
+	 * @package O2System\Cache
+	 */
+	class UnsupportedDriverException extends Exception
+	{
+		public function __construct( $message, $code, $args = array() )
+		{
+			$this->_args = $args;
+			parent::__construct( $message, $code );
 		}
 	}
 }
